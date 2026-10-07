@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TTB Label Verification Prototype</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">U.S. Treasury Take Home Prototype</div>
+      <h1>TTB Label Verification</h1>
+      <p>Fast, human centered review for alcohol beverage label applications.</p>
+    </div>
+
+    <div class="status-badge">
+      Standalone Proof of Concept
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>1. Application Data</h2>
+
+      <div class="grid">
+        <label>
+          Brand name
+          <input id="brand" value="OLD TOM DISTILLERY" />
+        </label>
+
+        <label>
+          Class / type
+          <input id="type" value="Kentucky Straight Bourbon Whiskey" />
+        </label>
+
+        <label>
+          Alcohol content
+          <input id="abv" value="45% Alc./Vol. (90 Proof)" />
+        </label>
+
+        <label>
+          Net contents
+          <input id="net" value="750 mL" />
+        </label>
+
+        <label>
+          Producer / bottler
+          <input
+            id="producer"
+            value="Old Tom Distillery, Louisville, KY"
+          />
+        </label>
+
+        <label>
+          Country of origin
+          <input
+            id="origin"
+            placeholder="Required for imports"
+          />
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>2. Label Artwork</h2>
+
+      <label class="upload">
+        <span>Upload label image</span>
+        <input
+          id="imageUpload"
+          type="file"
+          accept="image/*"
+        />
+      </label>
+
+      <img
+        id="preview"
+        alt="Uploaded label preview"
+        hidden
+      />
+
+      <label>
+        Extracted or visible label text
+
+        <textarea
+          id="labelText"
+          rows="10"
+        >OLD TOM DISTILLERY
+Kentucky Straight Bourbon Whiskey
+45% Alc./Vol. (90 Proof)
+750 mL
+Old Tom Distillery, Louisville, KY
+GOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.</textarea>
+      </label>
+
+      <p class="hint">
+        Prototype note: the image is previewed locally.
+        The verification engine uses the supplied label text
+        so the core review workflow remains fast and testable
+        without external network dependencies.
+      </p>
+    </section>
+
+    <section class="panel actions">
+      <button id="verifyBtn">
+        Verify Label
+      </button>
+
+      <button
+        id="loadMismatch"
+        class="secondary"
+      >
+        Load Mismatch Example
+      </button>
+
+      <button
+        id="resetBtn"
+        class="secondary"
+      >
+        Reset
+      </button>
+
+      <span id="runtime"></span>
+    </section>
+
+    <section
+      class="panel"
+      id="resultsPanel"
+    >
+      <div class="results-header">
+        <div>
+          <h2>3. Verification Result</h2>
+
+          <p id="summary">
+            Run verification to see results.
+          </p>
+        </div>
+
+        <div
+          id="overall"
+          class="overall neutral"
+        >
+          Not Run
+        </div>
+      </div>
+
+      <div
+        id="results"
+        class="results"
+      ></div>
+    </section>
+
+    <section class="panel">
+      <h2>Design Decisions</h2>
+
+      <ul>
+        <li>
+          Deterministic compliance checks for fields where exactness matters.
+        </li>
+
+        <li>
+          Normalization for harmless formatting differences such as capitalization and punctuation.
+        </li>
+
+        <li>
+          Human review status for ambiguous or near match cases.
+        </li>
+
+        <li>
+          No storage of uploaded images or label text in this prototype.
+        </li>
+
+        <li>
+          Architecture leaves OCR or vision integration as a replaceable extraction layer.
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    Prototype for evaluation only. Not connected to COLA or Treasury production systems.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
